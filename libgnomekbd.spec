@@ -4,9 +4,9 @@
 #
 Name     : libgnomekbd
 Version  : 3.26.1
-Release  : 6
-URL      : https://github.com/GNOME/libgnomekbd/archive/3.26.1.tar.gz
-Source0  : https://github.com/GNOME/libgnomekbd/archive/3.26.1.tar.gz
+Release  : 7
+URL      : https://download.gnome.org/sources/libgnomekbd/3.26/libgnomekbd-3.26.1.tar.xz
+Source0  : https://download.gnome.org/sources/libgnomekbd/3.26/libgnomekbd-3.26.1.tar.xz
 Summary  : GNOME keyboard shared library
 Group    : Development/Tools
 License  : LGPL-2.0
@@ -15,7 +15,7 @@ Requires: libgnomekbd-data = %{version}-%{release}
 Requires: libgnomekbd-lib = %{version}-%{release}
 Requires: libgnomekbd-license = %{version}-%{release}
 Requires: libgnomekbd-locales = %{version}-%{release}
-BuildRequires : buildreq-qmake
+BuildRequires : buildreq-gnome
 BuildRequires : gettext
 BuildRequires : glibc-bin
 BuildRequires : gobject-introspection-dev
@@ -54,6 +54,7 @@ Requires: libgnomekbd-lib = %{version}-%{release}
 Requires: libgnomekbd-bin = %{version}-%{release}
 Requires: libgnomekbd-data = %{version}-%{release}
 Provides: libgnomekbd-devel = %{version}-%{release}
+Requires: libgnomekbd = %{version}-%{release}
 
 %description dev
 dev components for the libgnomekbd package.
@@ -87,28 +88,34 @@ locales components for the libgnomekbd package.
 
 %prep
 %setup -q -n libgnomekbd-3.26.1
+cd %{_builddir}/libgnomekbd-3.26.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1549893062
-%autogen --disable-static
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1583764607
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
+%configure --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1549893062
+export SOURCE_DATE_EPOCH=1583764607
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libgnomekbd
-cp COPYING.LIB %{buildroot}/usr/share/package-licenses/libgnomekbd/COPYING.LIB
+cp %{_builddir}/libgnomekbd-3.26.1/COPYING.LIB %{buildroot}/usr/share/package-licenses/libgnomekbd/b256632dcce76559734ff0a23330d2898b7d3a3b
 %make_install
 %find_lang libgnomekbd
 
@@ -157,7 +164,7 @@ cp COPYING.LIB %{buildroot}/usr/share/package-licenses/libgnomekbd/COPYING.LIB
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/libgnomekbd/COPYING.LIB
+/usr/share/package-licenses/libgnomekbd/b256632dcce76559734ff0a23330d2898b7d3a3b
 
 %files locales -f libgnomekbd.lang
 %defattr(-,root,root,-)
