@@ -4,7 +4,7 @@
 #
 Name     : libgnomekbd
 Version  : 3.26.1
-Release  : 7
+Release  : 8
 URL      : https://download.gnome.org/sources/libgnomekbd/3.26/libgnomekbd-3.26.1.tar.xz
 Source0  : https://download.gnome.org/sources/libgnomekbd/3.26/libgnomekbd-3.26.1.tar.xz
 Summary  : GNOME keyboard shared library
@@ -17,7 +17,6 @@ Requires: libgnomekbd-license = %{version}-%{release}
 Requires: libgnomekbd-locales = %{version}-%{release}
 BuildRequires : buildreq-gnome
 BuildRequires : gettext
-BuildRequires : glibc-bin
 BuildRequires : gobject-introspection-dev
 BuildRequires : perl(XML::Parser)
 BuildRequires : pkgconfig(gdk-3.0)
@@ -95,11 +94,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1583764607
+export SOURCE_DATE_EPOCH=1586240580
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$CFLAGS -fno-lto "
-export FFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure --disable-static
 make  %{?_smp_mflags}
@@ -112,7 +111,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1583764607
+export SOURCE_DATE_EPOCH=1586240580
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libgnomekbd
 cp %{_builddir}/libgnomekbd-3.26.1/COPYING.LIB %{buildroot}/usr/share/package-licenses/libgnomekbd/b256632dcce76559734ff0a23330d2898b7d3a3b
