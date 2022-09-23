@@ -4,7 +4,7 @@
 #
 Name     : libgnomekbd
 Version  : 3.28.1
-Release  : 12
+Release  : 13
 URL      : https://download.gnome.org/sources/libgnomekbd/3.28/libgnomekbd-3.28.1.tar.xz
 Source0  : https://download.gnome.org/sources/libgnomekbd/3.28/libgnomekbd-3.28.1.tar.xz
 Summary  : GNOME keyboard shared library
